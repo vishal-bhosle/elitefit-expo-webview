@@ -3,6 +3,8 @@ import { SafeAreaView, Text, ScrollView, RefreshControl, Alert, BackHandler } fr
 import { WebView } from "react-native-webview";
 import * as Permissions from "expo-permissions"; // Importing Expo permissions
 import * as ScreenOrientation from "expo-screen-orientation";
+import { Camera } from "expo-camera";
+import { Audio } from "expo-av";
 
 // Your API call function to fetch redirect link
 const fetchRedirectLink = async () => {
@@ -32,8 +34,10 @@ const fetchRedirectLink = async () => {
 const requestPermissions = async () => {
     try {
         // Request camera and microphone permissions
-        const { status: cameraStatus } = await Permissions.askAsync(Permissions.CAMERA);
-        const { status: microphoneStatus } = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
+        const { status: cameraStatus } =
+          await Camera.requestCameraPermissionsAsync();
+        const { status: microphoneStatus } =
+          await Audio.requestPermissionsAsync();
 
         if (cameraStatus === 'granted') {
             console.log('Camera permission granted');
